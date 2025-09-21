@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Slip {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+  used      Boolean  @default(false)
+  usedAt    DateTime?
+  usedBy    String?
+  metadata  Json?
+}
+
+model VerificationLog {
+  id        Int      @id @default(autoincrement())
+  slipId    String
+  staffId   String
+  result    String
+  details   String?
+  createdAt DateTime @default(now())
+}
